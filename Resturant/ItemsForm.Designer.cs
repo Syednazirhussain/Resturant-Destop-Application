@@ -476,7 +476,7 @@
             this.btn_clear.Location = new System.Drawing.Point(55, 27);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(32, 25);
-            this.btn_clear.TabIndex = 12;
+            this.btn_clear.TabIndex = 6;
             this.btn_clear.UseVisualStyleBackColor = true;
             this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
@@ -488,7 +488,7 @@
             this.btn_search.Location = new System.Drawing.Point(357, 27);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(44, 27);
-            this.btn_search.TabIndex = 3;
+            this.btn_search.TabIndex = 5;
             this.btn_search.Text = "GO";
             this.btn_search.UseVisualStyleBackColor = true;
             this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
@@ -501,7 +501,7 @@
             this.cb_search.Location = new System.Drawing.Point(256, 27);
             this.cb_search.Name = "cb_search";
             this.cb_search.Size = new System.Drawing.Size(95, 25);
-            this.cb_search.TabIndex = 11;
+            this.cb_search.TabIndex = 4;
             // 
             // txt_search
             // 

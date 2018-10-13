@@ -95,7 +95,6 @@
             this.btn_kitchen.Name = "btn_kitchen";
             this.btn_kitchen.Size = new System.Drawing.Size(160, 85);
             this.btn_kitchen.TabIndex = 1;
-            this.btn_kitchen.TabStop = false;
             this.btn_kitchen.Text = "Kitchen";
             this.btn_kitchen.UseVisualStyleBackColor = true;
             this.btn_kitchen.Click += new System.EventHandler(this.btn_kitchen_Click);
@@ -110,7 +109,6 @@
             this.btn_orders.Name = "btn_orders";
             this.btn_orders.Size = new System.Drawing.Size(160, 85);
             this.btn_orders.TabIndex = 0;
-            this.btn_orders.TabStop = false;
             this.btn_orders.Text = "Orders";
             this.btn_orders.UseVisualStyleBackColor = true;
             this.btn_orders.Click += new System.EventHandler(this.btn_orders_Click);
@@ -127,7 +125,6 @@
             this.btn_logout.Name = "btn_logout";
             this.btn_logout.Size = new System.Drawing.Size(160, 85);
             this.btn_logout.TabIndex = 8;
-            this.btn_logout.TabStop = false;
             this.btn_logout.UseVisualStyleBackColor = true;
             this.btn_logout.Click += new System.EventHandler(this.btn_logout_Click);
             // 
@@ -141,7 +138,6 @@
             this.btn_user.Name = "btn_user";
             this.btn_user.Size = new System.Drawing.Size(160, 85);
             this.btn_user.TabIndex = 6;
-            this.btn_user.TabStop = false;
             this.btn_user.Text = "Users";
             this.btn_user.UseVisualStyleBackColor = true;
             this.btn_user.Click += new System.EventHandler(this.btn_user_Click);
@@ -156,7 +152,6 @@
             this.btn_emp.Name = "btn_emp";
             this.btn_emp.Size = new System.Drawing.Size(160, 85);
             this.btn_emp.TabIndex = 7;
-            this.btn_emp.TabStop = false;
             this.btn_emp.Text = "Employees";
             this.btn_emp.UseVisualStyleBackColor = true;
             this.btn_emp.Click += new System.EventHandler(this.btn_emp_Click);
@@ -171,7 +166,6 @@
             this.btn_report.Name = "btn_report";
             this.btn_report.Size = new System.Drawing.Size(160, 85);
             this.btn_report.TabIndex = 3;
-            this.btn_report.TabStop = false;
             this.btn_report.Text = "Reports";
             this.btn_report.UseVisualStyleBackColor = true;
             this.btn_report.Click += new System.EventHandler(this.btn_report_Click);
@@ -186,7 +180,6 @@
             this.btn_item.Name = "btn_item";
             this.btn_item.Size = new System.Drawing.Size(160, 85);
             this.btn_item.TabIndex = 2;
-            this.btn_item.TabStop = false;
             this.btn_item.Text = "Items";
             this.btn_item.UseVisualStyleBackColor = true;
             this.btn_item.Click += new System.EventHandler(this.btn_item_Click);
@@ -201,7 +194,6 @@
             this.btn_table.Name = "btn_table";
             this.btn_table.Size = new System.Drawing.Size(160, 85);
             this.btn_table.TabIndex = 5;
-            this.btn_table.TabStop = false;
             this.btn_table.Text = "Tables";
             this.btn_table.UseVisualStyleBackColor = true;
             this.btn_table.Click += new System.EventHandler(this.btn_table_Click);
@@ -216,7 +208,6 @@
             this.btn_customer.Name = "btn_customer";
             this.btn_customer.Size = new System.Drawing.Size(160, 85);
             this.btn_customer.TabIndex = 4;
-            this.btn_customer.TabStop = false;
             this.btn_customer.Text = "Customers";
             this.btn_customer.UseVisualStyleBackColor = true;
             this.btn_customer.Click += new System.EventHandler(this.btn_customer_Click);
@@ -238,7 +229,7 @@
             // 
             this.lbl_userType.AutoSize = true;
             this.lbl_userType.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_userType.Location = new System.Drawing.Point(40, 49);
+            this.lbl_userType.Location = new System.Drawing.Point(109, 49);
             this.lbl_userType.Name = "lbl_userType";
             this.lbl_userType.Size = new System.Drawing.Size(13, 17);
             this.lbl_userType.TabIndex = 1;
@@ -248,7 +239,7 @@
             // 
             this.lbl_clock.AutoSize = true;
             this.lbl_clock.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_clock.Location = new System.Drawing.Point(36, 9);
+            this.lbl_clock.Location = new System.Drawing.Point(106, 9);
             this.lbl_clock.Name = "lbl_clock";
             this.lbl_clock.Size = new System.Drawing.Size(17, 21);
             this.lbl_clock.TabIndex = 0;

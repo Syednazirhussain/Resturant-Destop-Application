@@ -40,6 +40,15 @@ namespace Resturant.Model
             return this.executeQuerey(querey);
         }
 
+        public DataTable searchKitchen(string keyword)
+        {
+            string query = "select kitchens.* , item_categories.id as category_id,item_categories.name as category_name, kitchen_items.id as kitchen_items_id from kitchen_items";
+            query += " inner join kitchens on kitchens.id = kitchen_items.kitchen_id inner join item_categories on item_categories.id = kitchen_items.category_id";
+            query += " WHERE kitchens.name LIKE '%"+keyword+"%' order by kitchens.id DESC";
+            return this.executeQuerey(query);
+        }
+
+
         public DataTable getKitchenById()
         {
             string querey = "select kitchens.* , item_categories.id as category_id,item_categories.name as category_name, kitchen_items.id as kitchen_items_id from kitchen_items inner join kitchens on kitchens.id = kitchen_items.kitchen_id inner join item_categories on item_categories.id = kitchen_items.category_id where kitchens.id = "+this.id;
@@ -158,54 +167,102 @@ namespace Resturant.Model
             return this.insert("kitchens", Columns);
         }
         
-        public List<Tuple<string, string, string>> getKitchens()
+        public List<Tuple<string, string, string>> getKitchens(DataTable data = null)
         {
             List<Tuple<string, string, string>> kitchen = new List<Tuple<string, string, string>>();
 
-            if(this.dataKitchen.Rows.Count > 0)
+            if(data != null)
             {
-                List<string> cat = new List<string>();
-
-                for(int i = 0; i < this.dataKitchen.Rows.Count; i++)
+                if (data.Rows.Count > 0)
                 {
-                    if (i == 0)
+                    List<string> cat = new List<string>();
+
+                    for (int i = 0; i < data.Rows.Count; i++)
                     {
-                        cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
-                    }
-                    else
-                    {
-                        if (this.dataKitchen.Rows[i - 1]["id"].ToString().Equals(this.dataKitchen.Rows[i]["id"].ToString()))
+                        if (i == 0)
                         {
-                            if(this.dataKitchen.Rows.Count - i == 1)
-                            {
-                                cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
-                                kitchen.Add(Tuple.Create(this.dataKitchen.Rows[i - 1]["id"].ToString(), this.dataKitchen.Rows[i - 1]["name"].ToString(), string.Join<string>(" | ", cat)));
-                                cat.Clear();
-                            }
-                            else
-                            {
-                                cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
-                            }
+                            cat.Add(data.Rows[i]["category_name"].ToString());
                         }
                         else
                         {
-                            kitchen.Add(Tuple.Create(this.dataKitchen.Rows[i - 1]["id"].ToString(), this.dataKitchen.Rows[i - 1]["name"].ToString(), string.Join<string>(" | ", cat)));
-                            cat.Clear();
-                            if (this.dataKitchen.Rows.Count - i == 1)
+                            if (data.Rows[i - 1]["id"].ToString().Equals(data.Rows[i]["id"].ToString()))
                             {
-                                cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
-                                kitchen.Add(Tuple.Create(this.dataKitchen.Rows[i]["id"].ToString(), this.dataKitchen.Rows[i]["name"].ToString(), string.Join<string>(" | ", cat)));
-                                cat.Clear();
+                                if (data.Rows.Count - i == 1)
+                                {
+                                    cat.Add(data.Rows[i]["category_name"].ToString());
+                                    kitchen.Add(Tuple.Create(data.Rows[i - 1]["id"].ToString(), data.Rows[i - 1]["name"].ToString(), string.Join<string>(" | ", cat)));
+                                    cat.Clear();
+                                }
+                                else
+                                {
+                                    cat.Add(data.Rows[i]["category_name"].ToString());
+                                }
                             }
                             else
                             {
-                                cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
+                                kitchen.Add(Tuple.Create(data.Rows[i - 1]["id"].ToString(), data.Rows[i - 1]["name"].ToString(), string.Join<string>(" | ", cat)));
+                                cat.Clear();
+                                if (data.Rows.Count - i == 1)
+                                {
+                                    cat.Add(data.Rows[i]["category_name"].ToString());
+                                    kitchen.Add(Tuple.Create(data.Rows[i]["id"].ToString(), data.Rows[i]["name"].ToString(), string.Join<string>(" | ", cat)));
+                                    cat.Clear();
+                                }
+                                else
+                                {
+                                    cat.Add(data.Rows[i]["category_name"].ToString());
+                                }
                             }
                         }
                     }
                 }
             }
+            else
+            {
+                if (this.dataKitchen.Rows.Count > 0)
+                {
+                    List<string> cat = new List<string>();
 
+                    for (int i = 0; i < this.dataKitchen.Rows.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
+                        }
+                        else
+                        {
+                            if (this.dataKitchen.Rows[i - 1]["id"].ToString().Equals(this.dataKitchen.Rows[i]["id"].ToString()))
+                            {
+                                if (this.dataKitchen.Rows.Count - i == 1)
+                                {
+                                    cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
+                                    kitchen.Add(Tuple.Create(this.dataKitchen.Rows[i - 1]["id"].ToString(), this.dataKitchen.Rows[i - 1]["name"].ToString(), string.Join<string>(" | ", cat)));
+                                    cat.Clear();
+                                }
+                                else
+                                {
+                                    cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
+                                }
+                            }
+                            else
+                            {
+                                kitchen.Add(Tuple.Create(this.dataKitchen.Rows[i - 1]["id"].ToString(), this.dataKitchen.Rows[i - 1]["name"].ToString(), string.Join<string>(" | ", cat)));
+                                cat.Clear();
+                                if (this.dataKitchen.Rows.Count - i == 1)
+                                {
+                                    cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
+                                    kitchen.Add(Tuple.Create(this.dataKitchen.Rows[i]["id"].ToString(), this.dataKitchen.Rows[i]["name"].ToString(), string.Join<string>(" | ", cat)));
+                                    cat.Clear();
+                                }
+                                else
+                                {
+                                    cat.Add(this.dataKitchen.Rows[i]["category_name"].ToString());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             return kitchen;
         }
 

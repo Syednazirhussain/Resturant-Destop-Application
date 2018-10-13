@@ -343,21 +343,7 @@ namespace Resturant
                         if (this.filePath.Equals(""))
                         {
                             file = this.previousImage;
-                            items = new Items(
-                               this.itemId,
-                               categoryId,
-                               name,
-                               desc,
-                               sale_price,
-                               purchase_price,
-                               discount,
-                               apply_discount,
-                               apply_tax,
-                               is_kitchen,
-                               file,
-                               created_at,
-                               updated_at
-                               );
+                            items = new Items(this.itemId,categoryId,name,desc,sale_price,purchase_price,discount,apply_discount,apply_tax,is_kitchen,file, created_at,updated_at);
                             int result = items.updateItem();
                             if (result > 0)
                             {
@@ -369,21 +355,7 @@ namespace Resturant
                         else
                         {
                             file = Guid.NewGuid()+"_"+this.itemId+ this.fileExt;
-                            items = new Items(
-                               this.itemId,
-                               categoryId,
-                               name,
-                               desc,
-                               sale_price,
-                               purchase_price,
-                               discount,
-                               apply_discount,
-                               apply_tax,
-                               is_kitchen,
-                               file,
-                               created_at,
-                               updated_at
-                               );
+                            items = new Items(this.itemId,categoryId,name, desc, sale_price, purchase_price, discount, apply_discount, apply_tax, is_kitchen, file, created_at, updated_at);
                             int result = items.updateItem();
                             if (result > 0)
                             {
@@ -403,26 +375,14 @@ namespace Resturant
                 else
                 {
                     string imagePath = "";
-                    items = new Items(
-                        categoryId,
-                        name,
-                        desc,
-                        sale_price,
-                        purchase_price,
-                        discount,
-                        apply_discount,
-                        apply_tax,
-                        is_kitchen,
-                        imagePath,
-                        created_at,
-                        updated_at
-                        );
+                    items = new Items(categoryId, name, desc, sale_price, purchase_price, discount, apply_discount, apply_tax, is_kitchen, imagePath, created_at, updated_at);
                     int result = items.addItem();
                     if (result > 0)
                     {
                         if (this.filePath.Equals("") && this.fileExt.Equals(""))
                         {
-                            MessageBox.Show("Item has created successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);  
+                            MessageBox.Show("Item has created successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.DialogResult = DialogResult.OK;
                             this.nullInputFied();
                             this.Close();
                         }
@@ -439,7 +399,7 @@ namespace Resturant
                             if (check > 0)
                             {
                                 MessageBox.Show("Item has created successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                                this.DialogResult = DialogResult.OK;
                                 this.nullInputFied();
                                 this.Close();
                             }
@@ -463,6 +423,7 @@ namespace Resturant
                         if (result > 0)
                         {
                             MessageBox.Show("Item has been deleted successfully","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                            this.DialogResult = DialogResult.OK;
                             this.Close();
                         }
                     }
@@ -489,6 +450,8 @@ namespace Resturant
             txt_purchase.Clear();
             txt_discount.Clear();
         }
+
+
         private bool validateInput()
         {
             int isError = 0;

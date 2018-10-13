@@ -14,11 +14,8 @@ namespace Resturant
     public partial class KitchenForm : Form
     {
         private Kitchen kitchen;
-        public KitchenForm()
-        {
-            InitializeComponent();
-        }
 
+        #region General
         private void main_menu_Click(object sender, EventArgs e)
         {
             MainPanel mainPanel = new MainPanel();
@@ -38,27 +35,49 @@ namespace Resturant
             lbl_clock.Text = DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString();
             timer1.Start();
         }
-
-        private void KitchenForm_Load(object sender, EventArgs e)
+        #endregion
+        public KitchenForm()
         {
+            InitializeComponent();
             lbl_userType.Text = "User Type : " + Login.user_role.ToUpper();
-        }
 
-        private void tab_kitchen_Enter(object sender, EventArgs e)
-        {
+            txt_search.KeyPress += EnterKeyPressEventOccure;
+
+            btn_clear.Hide();
             this.loadKitchen();
         }
 
-        private void loadKitchen()
+        private void EnterKeyPressEventOccure(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar.Equals((char)Keys.Return))
+            {
+                if (txt_search.Text.ToString().Length > 0)
+                {
+                    btn_clear.Show();
+                    this.loadKitchen(txt_search.Text.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Please enter keyword to search", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void loadKitchen(string search = null)
         {
             kitchen = new Kitchen();
+            List<Tuple<string, string, string>> kitchenList = new List<Tuple<string, string, string>>();
+            if (search != null && Encrption.trim(search).Length > 0)
+            {
 
-            List<Tuple<string, string, string>> kitchenList = kitchen.getKitchens();
-
+                kitchenList  = kitchen.getKitchens(kitchen.searchKitchen(search));
+            }
+            else
+            {
+                kitchenList = kitchen.getKitchens();
+            }
             dgv_kitchen.Rows.Clear();
-
             int sno = 0;
-
             foreach (var tuple in kitchenList)
             {
                 dgv_kitchen.Rows.Add(new object[] { ++sno , tuple.Item1, tuple.Item2, tuple.Item3 });
@@ -77,6 +96,8 @@ namespace Resturant
                     {
                         if (item.ShowDialog() != DialogResult.Cancel)
                         {
+                            txt_search.Clear();
+                            btn_clear.Hide();
                             this.loadKitchen();
                         }
                     }
@@ -92,13 +113,34 @@ namespace Resturant
         {
             using (KitchenED item = new KitchenED())
             {
-                if (item.ShowDialog() != DialogResult.OK)
+                if (item.ShowDialog() != DialogResult.Cancel)
                 {
+                    txt_search.Clear();
+                    btn_clear.Hide();
                     this.loadKitchen();
                 }
             }
         }
 
+        private void btn_clear_Click(object sender, EventArgs e)
+        {
+            txt_search.Clear();
+            btn_clear.Hide();
+            this.loadKitchen();
+        }
+
+        private void btn_search_Click(object sender, EventArgs e)
+        {
+            if(txt_search.Text.ToString().Length > 0)
+            {
+                btn_clear.Show();
+                this.loadKitchen(txt_search.Text.ToString());
+            }
+            else
+            {
+                MessageBox.Show("Please enter keyword to search","Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+        }
 
     }
 }

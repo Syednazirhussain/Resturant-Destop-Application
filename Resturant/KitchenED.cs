@@ -360,8 +360,7 @@ namespace Resturant
                         }
                         else
                         {
-                            var confirmResult = MessageBox.Show("Please select atleast one category",
-                "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            var confirmResult = MessageBox.Show("Please select atleast one category","Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             if (confirmResult == DialogResult.OK)
                             {
                                 message = "Nothing to update";
@@ -379,10 +378,10 @@ namespace Resturant
                         if(flag)
                         {
                             MessageBox.Show(message,"Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                            this.DialogResult = DialogResult.OK;
                             this.Close();
                         }
                     }
-                    //MessageBox.Show(String.Format("New {0} {1}\n Remove Existing {2} {3} ", this.categoriesList.Count, String.Join(",", this.categoriesList), this.removeCategoriesList.Count, String.Join(",", this.removeCategoriesList)));
                 }
                 else
                 {
@@ -399,7 +398,7 @@ namespace Resturant
                                 if (count > 0)
                                 {
                                     MessageBox.Show("Kitchen has inserted successfully","Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                               
+                                    this.DialogResult = DialogResult.OK;
                                     this.Close();
                                 }
                                 else
@@ -419,7 +418,7 @@ namespace Resturant
                     }
                     else
                     {
-                        var confirmResult = MessageBox.Show("Please select atleast on category", "Kitchen Cannot Added", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        var confirmResult = MessageBox.Show("Please select atleast on category", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                         if (confirmResult == DialogResult.OK)
                         {
                             txt_name.Clear();
@@ -440,7 +439,8 @@ namespace Resturant
                     int result = kitchen.deleteKitchen();
                     if (result > 0)
                     {
-                        MessageBox.Show("Kitchen deleted successfully");
+                        MessageBox.Show("Kitchen deleted successfully","Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
                 }

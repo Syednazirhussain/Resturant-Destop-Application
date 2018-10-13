@@ -19,6 +19,8 @@ namespace Resturant
 
         private Category category;
 
+        private bool is_search;
+
         private string appPath;
 
         public ItemsForm()
@@ -32,9 +34,12 @@ namespace Resturant
             cb_search.Items.Add("Category");
             cb_search.SelectedIndex = 0;
 
+            txt_search.KeyPress += EnterKeyPressEventOccure;
+            is_search = false;
             btn_clear.Hide();
 
         }
+
 
         #region General
 
@@ -145,8 +150,39 @@ namespace Resturant
         #region Items
         private void tab_items_Enter(object sender, EventArgs e)
         {
-            items = new Items();
-            LoadItems(items.getItems());
+            if(!is_search)
+            {
+                items = new Items();
+                LoadItems(items.getItems());
+            }
+        }
+
+        private void EnterKeyPressEventOccure(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar.Equals((char)Keys.Return))
+            {
+                items = new Items();
+                if (txt_search.Text.ToString().Length > 0)
+                {
+                    DataTable data = items.searchItem(Encrption.trim(txt_search.Text.ToString()), cb_search.SelectedItem.ToString());
+                    if (data.Rows.Count > 0)
+                    {
+                        is_search = true;
+                        btn_clear.Show();
+                        LoadItems(data);
+                    }
+                    else
+                    {
+                        MessageBox.Show("No record(s) found", "Infomation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(String.Format("Please enter keyword to search by {0}", cb_search.SelectedItem.ToString()), "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txt_search.Focus();
+                    LoadItems(items.getItems());
+                }
+            }
         }
 
         private void btn_search_Click(object sender, EventArgs e)
@@ -157,6 +193,7 @@ namespace Resturant
                 DataTable data = items.searchItem(Encrption.trim(txt_search.Text.ToString()), cb_search.SelectedItem.ToString());
                 if (data.Rows.Count > 0)
                 {
+                    is_search = true;
                     btn_clear.Show();
                     LoadItems(data);
                 }
@@ -175,21 +212,11 @@ namespace Resturant
 
         private void btn_clear_Click(object sender, EventArgs e)
         {
-
+            btn_clear.Hide();
+            txt_search.Clear();
+            LoadItems(items.getItems());
         }
 
-        /*
-            string name = txt_searchItem.Text.ToString();
-            if (name.Length > 0)
-            {
-                items = new Items();
-                this.itemsGridViewFormatting(items.searchItem(name));
-            }
-            else
-            {
-                this.loadItems();
-            } 
-        */
 
         private void LoadItems(DataTable dataTable)
         {
@@ -198,7 +225,6 @@ namespace Resturant
                 dgv_items.Rows.Clear();
                 dgv_items.RowTemplate.Height = 100;
                 dgv_items.Columns["image"].Width = 10;
-
                 try
                 {
                     int sno = 0;
@@ -281,6 +307,7 @@ namespace Resturant
                         if (item.ShowDialog() != DialogResult.Cancel)
                         {
                             txt_search.Clear();
+                            btn_clear.Hide();
                             items = new Items();
                             LoadItems(items.getItems());
                         }
@@ -378,20 +405,15 @@ namespace Resturant
         {
             using (ItemED item = new ItemED())
             {
-                if (item.ShowDialog() != DialogResult.OK)
+                if (item.ShowDialog() != DialogResult.Cancel)
                 {
+                    txt_search.Clear();
+                    btn_clear.Hide();
                     items = new Items();
                     LoadItems(items.getItems());
                 }
             }
         }
-
-        //private void loadItems()
-        //{
-        //    items = new Items();
-        //    this.LoadItems(items.getItems());
-        //    this.removeUnwantedImage();
-        //}
 
         private bool ContainColumn(string columnName, DataTable table)
         {

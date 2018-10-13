@@ -93,31 +93,34 @@ namespace Resturant.Model
             return this.executeQuerey(querey);
         }
 
+        #region query
+        /*
+                string querey = "SELECT items.* , kitchens.* , item_categories.* from item_categories ";
+                querey += "INNER JOIN items on ";
+                querey += "item_categories.id = items.category_id ";
+                querey += "INNER JOIN kitchen_items on ";
+                querey += "item_categories.id = kitchen_items.category_id ";
+                querey += "LEFT JOIN kitchens ON ";
+                querey += "kitchen_items.kitchen_id = kitchens.id ";
+                querey += "where item_categories.name like '%" + keyword + "%'";
+         */
+        #endregion
+
         public DataTable searchItem(string keyword,string type)
         {
             if(type.Equals("Name"))
             {
-                string querey = "SELECT items.* , kitchens.* , item_categories.* from item_categories ";
-                querey += "INNER JOIN items on ";
-                querey += "item_categories.id = items.category_id ";
-                querey += "INNER JOIN kitchen_items on ";
-                querey += "item_categories.id = kitchen_items.category_id ";
-                querey += "LEFT JOIN kitchens ON ";
-                querey += "kitchen_items.kitchen_id = kitchens.id ";
-                querey += "where items.name LIKE '%" + name + "%'";
-                return this.executeQuerey(querey);
+                string query = "select items.* ,  item_categories.name as category_name";
+                query += " from items  inner join item_categories on items.category_id = item_categories.id";
+                query += " WHERE items.name LIKE '%"+keyword+"%'";
+                return this.executeQuerey(query);
             }
             else if(type.Equals("Category"))
             {
-                string querey = "SELECT items.* , kitchens.* , item_categories.* from item_categories ";
-                querey += "INNER JOIN items on ";
-                querey += "item_categories.id = items.category_id ";
-                querey += "INNER JOIN kitchen_items on ";
-                querey += "item_categories.id = kitchen_items.category_id ";
-                querey += "LEFT JOIN kitchens ON ";
-                querey += "kitchen_items.kitchen_id = kitchens.id ";
-                querey += "where items.name LIKE '%" + name + "%'";
-                return this.executeQuerey(querey);
+                string query = "select items.* ,  item_categories.name as category_name from items";
+                query += " inner join item_categories on items.category_id = item_categories.id";
+                query += " WHERE item_categories.name LIKE '%"+keyword+"%'";
+                return this.executeQuerey(query);
             }
             else
             {

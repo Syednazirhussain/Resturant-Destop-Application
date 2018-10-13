@@ -54,8 +54,12 @@ namespace Resturant
             this.cart_items = new Dictionary<string, List<double>>();
             this.employee = new Employee();
 
-            DataTable employeesData = this.employee.getWaiterEmployees();
+            btn_cancelOrder.Hide();
+            btn_finalReceipt.Hide();
+            btn_kitchenReceipt.Hide();
+            btn_prepayment.Hide();
 
+            DataTable employeesData = this.employee.getWaiterEmployees();
             if (employeesData.Rows.Count > 0)
             {
                 cb_server.DataSource = employeesData;
@@ -141,7 +145,12 @@ namespace Resturant
             this.orders = new Orders();
             this.orders.Id = order_id;
             this.orderId = order_id;
-            
+
+            btn_cancelOrder.Show();
+            btn_finalReceipt.Show();
+            btn_kitchenReceipt.Show();
+            btn_prepayment.Show();
+
             DataTable orderDetails = this.orders.getOrderDetail();
 
             if(orderDetails.Rows.Count > 0)
